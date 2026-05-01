@@ -1,7 +1,7 @@
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || '';
-const FROM_EMAIL = process.env.FROM_EMAIL || 'wishlist@orionhillevents.com';
-const FROM_NAME = process.env.FROM_NAME || 'Orion Hill Events';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@cravemedia.io';
+const FROM_NAME = process.env.FROM_NAME || 'Orion Hill Weddings & Events';
 const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
 
 const submissions = new Map();
