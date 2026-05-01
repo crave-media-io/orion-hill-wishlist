@@ -1,5 +1,5 @@
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
-const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || '';
+const NOTIFICATION_EMAILS = (process.env.NOTIFICATION_EMAIL || '').split(',').map(s => s.trim()).filter(Boolean);
 const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@cravemedia.io';
 const FROM_NAME = process.env.FROM_NAME || 'Orion Hill Weddings & Events';
 const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
@@ -34,7 +34,7 @@ async function sendBrevoEmail({ to, toName, subject, htmlContent }) {
     },
     body: JSON.stringify({
       sender: { name: FROM_NAME, email: FROM_EMAIL },
-      to: [{ email: to, name: toName || to }],
+      to: Array.isArray(to) ? to : [{ email: to, name: toName || to }],
       subject,
       htmlContent
     })
@@ -78,7 +78,7 @@ module.exports = async function handler(req, res) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
     return res.status(400).json({ error: 'Invalid email address' });
   }
-  if (!NOTIFICATION_EMAIL) {
+  if (NOTIFICATION_EMAILS.length === 0) {
     console.error('[Wishlist API] NOTIFICATION_EMAIL env var not set');
     return res.status(500).json({ error: 'Server configuration error' });
   }
@@ -106,8 +106,7 @@ module.exports = async function handler(req, res) {
 
   try {
     await sendBrevoEmail({
-      to: NOTIFICATION_EMAIL,
-      toName: FROM_NAME,
+      to: NOTIFICATION_EMAILS.map(e => ({ email: e, name: FROM_NAME })),
       subject: `New Date Wishlist from ${fullName}${scheduleTour ? ' (Tour Requested)' : ''}`,
       htmlContent: `
 <!DOCTYPE html>
