@@ -135,7 +135,7 @@ module.exports = async function handler(req, res) {
 </div>
 
 <div style="padding:16px 32px 20px;border-top:1px solid #f0ebe3;text-align:center;font-size:11px;color:#6B6860">
-  Submitted ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short' })} ET
+  Submitted ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short' })} CT
 </div>
 
 </div>
