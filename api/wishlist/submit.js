@@ -143,42 +143,6 @@ module.exports = async function handler(req, res) {
 </body></html>`
     });
 
-    await sendBrevoEmail({
-      to: email.trim(),
-      toName: fullName,
-      subject: 'We received your date wishlist!',
-      htmlContent: `
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#f5f2ec;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-<div style="max-width:560px;margin:40px auto;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-
-<div style="background:#1F2A1F;padding:32px;text-align:center">
-  <div style="color:#B08B4A;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px">Orion Hill Events</div>
-  <div style="color:#FAF6EE;font-size:24px;font-weight:500;line-height:1.3">Thank you, ${escapeHtml(firstName.trim())}!</div>
-</div>
-
-<div style="padding:28px 32px">
-  <p style="font-size:15px;color:#2A2420;line-height:1.7;margin:0 0 20px">We've received your date wishlist and our hospitality team will follow up within one business day to discuss availability and next steps.</p>
-
-  <div style="font-size:11px;color:#6B6860;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:500">Your Preferred Dates</div>
-  <table style="width:100%;border-collapse:collapse;background:#FFFDF8;border-radius:8px;overflow:hidden;border:1px solid #f0ebe3;margin-bottom:20px">
-    ${datesHtml}
-  </table>
-
-  ${scheduleTour ? '<p style="font-size:14px;color:#2A2420;background:rgba(176,139,74,0.08);padding:14px 16px;border-radius:8px;border-left:3px solid #B08B4A;margin:0 0 20px">We noted your interest in an in-person tour. We\'ll include scheduling details in our follow-up.</p>' : ''}
-
-  <p style="font-size:13px;color:#6B6860;line-height:1.6;margin:0">Dates are offered on a first-come, first-served basis. If you have any questions in the meantime, don't hesitate to reach out.</p>
-</div>
-
-<div style="padding:16px 32px 20px;border-top:1px solid #f0ebe3;text-align:center;font-size:11px;color:#6B6860">
-  Orion Hill Events &middot; First-come, first-served
-</div>
-
-</div>
-</body></html>`
-    });
-
     console.log('[Wishlist API] Submission processed:', { clientId, firstName: firstName.trim(), lastName: lastName.trim(), dates, scheduleTour });
     return res.status(200).json({ success: true });
 
